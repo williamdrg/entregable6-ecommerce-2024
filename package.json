@@ -6,7 +6,8 @@
   "bin": "./bin/cli.js",
   "scripts": {
     "reset:migrate": "node ./src/tests/testMigrate.js",
-    "start": "node --watch src/server",
+    "start": "node src/server",
+    "dev": "node --watch src/server",
     "test": "jest --detectOpenHandles",
     "pretest": "npm run reset:migrate",
     "posttest": "node ./src/tests/postTest.js "
