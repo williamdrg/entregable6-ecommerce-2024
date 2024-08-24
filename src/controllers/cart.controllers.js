@@ -46,7 +46,21 @@ const getOne = catchError(async(req, res) => {
     const { id } = req.params;
     if (userId !== parseInt(id))  throw { status: 404, message: 'You do not have permission to perform this action.' };
 
-    const result = await Cart.findByPk(id , { include: Product });
+    const result = await Cart.findByPk(id , {
+      where: { userId },
+      include: [
+        {
+          model: Product,
+          attributes: { exclude: ['updatedAt', 'createdAt'] },
+          include: [
+            {
+              model: Category,
+              attributes: ['name', 'id']
+            }
+          ]
+        }
+      ]
+    });
     if(!result) return res.sendStatus(404);
     return res.json(result);
 });

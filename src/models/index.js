@@ -8,14 +8,17 @@ const User = require("./User")
 Category.hasMany(Product)
 Product.belongsTo(Category)
 
-User.belongsToMany(Product, { through: Cart })
-Product.belongsToMany(User, { through: Cart })
+Cart.belongsTo(User)
+User.hasMany(Cart)
 
-Cart.belongsTo(User);
-Cart.belongsTo(Product);
+Cart.belongsTo(Product)
+Product.hasMany(Cart)
 
-User.belongsToMany(Product, { through: Purchase })
-Product.belongsToMany(User, { through: Purchase })
+Purchase.belongsTo(User)
+User.hasMany(Purchase)
+
+Purchase.belongsTo(Product)
+Product.hasMany(Purchase)
 
 Product.hasMany(ProductImg)
 ProductImg.belongsTo(Product)
