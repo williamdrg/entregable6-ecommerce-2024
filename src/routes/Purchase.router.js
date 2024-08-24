@@ -1,10 +1,10 @@
-const { getAll, create, getOne, remove, update } = require('../controllers/purchases.controllers');
+const { createPurchase, getAllPurchases } = require('../controllers/purchases.controllers');
 const express = require('express');
 
 const routerPurchase = express.Router();
 
 routerPurchase.route('/')
-  .get(getAll)
-  .post(create);
+  .get(getAllPurchases)
+  .post(createPurchase);
 
 module.exports = routerPurchase;

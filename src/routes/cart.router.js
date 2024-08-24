@@ -6,8 +6,8 @@ const routerCart = express.Router();
 routerCart.route('/')
   .get(getAll)
   .delete(remove)
+  .post(create)
   .put(update)
-  .post(create);
 
 routerCart.route('/:id')
   .get(getOne)

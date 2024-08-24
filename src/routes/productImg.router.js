@@ -1,14 +1,14 @@
-const { getAll, create, remove } = require('../controllers/productImg.controllers');
+const { getAllProductImages, uploadProductImage, deleteProductImage } = require('../controllers/productImg.controllers');
 const express = require('express');
 const upload = require('../utils/uploadFiles');
 
 const routerProductImg = express.Router();
 
 routerProductImg.route('/')
-  .get(getAll)
-  .post(upload.single('image'), create);
+  .get(getAllProductImages)
+  .post(upload.single('image'), uploadProductImage);
 
 routerProductImg.route('/:id')
-  .delete(remove)
+  .delete(deleteProductImage)
 
 module.exports = routerProductImg;

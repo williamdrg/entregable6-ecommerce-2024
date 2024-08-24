@@ -2,7 +2,6 @@ const catchError = require('../utils/catchError');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const Product = require('../models/Product');
 require('dotenv').config()
 
 const getAll = catchError(async(req, res) => {
@@ -22,8 +21,8 @@ const login = catchError(async(req, res) => {
   const user = await User.findOne({ where: { email }})
   if (!user) return res.status(404).json({ message: 'user not found' });
 
-  const verifyPassword = bcrypt.compare(password, user.password)
-  if (!verifyPassword) return res.status(400).json({ message: 'Invalid password' })
+  const passwordIsValid = await bcrypt.compare(password, user.password)
+  if (!passwordIsValid) return res.status(401).json({ message: 'Invalid password' })
 
   const userData = {...user.dataValues }
   delete userData.password
@@ -45,8 +44,11 @@ const update = catchError(async(req, res) => {
         { firstName, lastName },
         { where: { id }, returning: true }
     );
+
     if(result[0] === 0) return res.sendStatus(404);
-    return res.json(result[1][0]);
+   const updateUser = result[1][0].toJSON();
+    delete updateUser.password
+    return res.json(updateUser);
 });
 
 module.exports = {

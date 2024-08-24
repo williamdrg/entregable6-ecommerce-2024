@@ -12,5 +12,4 @@ const testMigrate = async () => {
   }
 }
 
-
 testMigrate()

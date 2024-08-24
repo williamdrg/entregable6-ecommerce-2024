@@ -3,15 +3,14 @@ const Purchase = require('../models/Purchase');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 
-const getAll = catchError(async(req, res) => {
+const getAllPurchases = catchError(async(req, res) => {
   const results = await Purchase.findAll();
   return res.json(results);
 });
 
-const create = catchError(async(req, res) => {
+const createPurchase = catchError(async(req, res) => {
   const userId = req.user.id
   const cartProducts = await Cart.findAll({where: { userId }, include: Product})
-
   if (cartProducts.length === 0) throw { status: 404, message: 'There are no products in the cart.' };
   const purchasesData = cartProducts.map(item => ({
     userId,
@@ -25,6 +24,6 @@ const create = catchError(async(req, res) => {
 });
 
 module.exports = {
-  getAll,
-  create
+  getAllPurchases,
+  createPurchase
 }
