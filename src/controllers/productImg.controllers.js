@@ -25,9 +25,8 @@ const deleteProductImage = catchError(async(req, res) => {
     const { id } = req.params;
     const result = await ProductImg.destroy({ where: {id} });
     if(!result) return res.sendStatus(404);
-    return res.sendStatus(204);
+    return res.sendStatus(204); 
 });
-
 
 module.exports = {
     getAllProductImages,
